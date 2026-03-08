@@ -32,7 +32,8 @@ class OSS {
       const userDataDir: string = app.getPath("userData");
       this.rootDir = path.join(userDataDir, "uploads");
     } else {
-      this.rootDir = path.join(process.cwd(), "uploads");
+      const dataDir = process.env.DATA_DIR || process.cwd();
+      this.rootDir = path.join(dataDir, "uploads");
     }
     // 初始化时自动创建根目录
     this.initPromise = fs.mkdir(this.rootDir, { recursive: true }).then(() => {});

@@ -178,14 +178,14 @@ docker-compose -f docker/docker-compose.local.yml up -d --build
 
 ### 数据持久化
 
-默认日志目录会挂载到宿主机 `./logs` 目录。如需持久化上传文件或数据库，可在 `docker-compose.yml` 中添加 volumes：
+默认已启用数据持久化，宿主机目录挂载如下：
 
-```yaml
-volumes:
-  - ./logs:/var/log
-  - ./uploads:/app/uploads # 持久化上传文件
-  - ./data:/app/data # 持久化数据库（如有）
-```
+| 宿主机目录 | 容器路径   | 说明                         |
+| ---------- | ---------- | ---------------------------- |
+| `./logs`   | `/var/log` | 日志                         |
+| `./data`   | `/app/data`| 数据库（db.sqlite）与上传文件 |
+
+即项目下的 `docker/` 同级目录中会使用 `data/`（数据库与上传文件）和 `logs/`（日志）。如需修改持久化目录，可调整 `docker-compose.yml` 中对应 `volumes` 配置；应用通过环境变量 `DATA_DIR` 指定数据根目录（默认在 Docker 中为 `/app/data`）。
 
 ### 常用操作命令
 

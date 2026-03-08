@@ -30,7 +30,8 @@ export default async function startServe(randomPort: Boolean = false) {
     const userDataDir: string = app.getPath("userData");
     rootDir = path.join(userDataDir, "uploads");
   } else {
-    rootDir = path.join(process.cwd(), "uploads");
+    const dataDir = process.env.DATA_DIR || process.cwd();
+    rootDir = path.join(dataDir, "uploads");
   }
 
   // 确保 uploads 目录存在
